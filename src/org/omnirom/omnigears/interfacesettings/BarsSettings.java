@@ -55,6 +55,7 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private static final String STATUS_BAR_NETWORK_ACTIVITY = "status_bar_network_activity";
     private static final String SOFT_BACK_KILL_APP = "soft_back_kill_app";
     private static final String EMULATE_MENU_KEY = "emulate_menu_key";
+    private static final String DOUBLE_TAP_TO_SLEEP = "double_tap_to_sleep";
 
     private CheckBoxPreference mStatusBarBrightnessControl;
     private CheckBoxPreference mStatusBarNotifCount;
@@ -67,6 +68,7 @@ public class BarsSettings extends SettingsPreferenceFragment implements
     private CheckBoxPreference mStatusBarNetworkActivity;
     private CheckBoxPreference mSoftBackKillApp;
     private CheckBoxPreference mEmulateMenuKey;
+    private CheckBoxPreference mDoubleTapGesture;
 
     private int mNetTrafficVal;
     private int MASK_UP;
@@ -168,6 +170,11 @@ public class BarsSettings extends SettingsPreferenceFragment implements
             prefSet.removePreference(findPreference(NETWORK_TRAFFIC_PERIOD));
         }
 
+        mDoubleTapGesture = (CheckBoxPreference) findPreference(DOUBLE_TAP_TO_SLEEP);
+        mDoubleTapGesture.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.DOUBLE_TAP_TO_SLEEP, 0) == 1);
+        mDoubleTapGesture.setOnPreferenceChangeListener(this);
+
         boolean hasNavBar = getResources().getBoolean(
                 com.android.internal.R.bool.config_showNavigationBar);
         // Also check, if users without navigation bar force enabled it.
@@ -259,6 +266,10 @@ public class BarsSettings extends SettingsPreferenceFragment implements
             boolean value = (Boolean) objValue;
             Settings.System.putInt(resolver,
                 Settings.System.EMULATE_HW_MENU_KEY, value ? 1 : 0);
+        } else if (preference == mDoubleTapGesture) {
+            boolean value = (Boolean) objValue;
+            Settings.System.putInt(resolver,
+                    Settings.System.DOUBLE_TAP_TO_SLEEP, value ? 1 : 0);
         } else {
             return false;
         }

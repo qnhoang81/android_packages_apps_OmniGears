@@ -511,4 +511,8 @@
     <string name="blur_radius_title">Blur content</string>
     <string name="blur_radius_summary">Intensity for the blur effect</string>
 
+    <!--Double tap to sleep-->
+    <string name="double_tap_to_sleep_title">Double tap to sleep</string>
+    <string name="double_tap_to_sleep_summary">Allow double tap in statusbar to turn off screen</string>
+
 </resources>
